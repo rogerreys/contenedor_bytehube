@@ -44,18 +44,3 @@ services:
         MYSQL_ROOT_PASSWORD: root
     depends_on:
         - my_mysql
-  # mariadb:
-  #     image: mariadb:10.6
-  #     # volumes:
-  #     #   - ./db:/var/lib/mysql
-  #     restart: always
-  #     environment:
-  #       MARIADB_DATABASE: dbs10724437
-  #       MARIADB_USER: dbu5622163
-  #       MARIADB_PASSWORD: Roysreyes902023
-  #       MARIADB_ROOT_PASSWORD: Roysreyes902023
-
-# networks:
-#   default:
-#     external:
-#       name: nginx-proxy
