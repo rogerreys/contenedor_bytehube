@@ -1,0 +1,61 @@
+version: '23.0.5'
+
+services:
+  my_mysql:
+    image: mysql:latest
+    volumes:
+      - ./database/mysql:/var/lib/mysql/
+      - ./db:/docker-entrypoint-initdb.d
+      # - ./db/dbs10724437.sql:/var/lib/mysql/mysql/
+    restart: always
+    environment:
+      MYSQL_DATABASE: dbs10724437
+      MYSQL_USER: dbu5622163
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 33066:3306
+    expose: 
+      - 33066
+  wordpress:
+    depends_on:
+      - my_mysql
+    expose:
+      - 80
+    ports:
+      - 8099:80
+    image: wordpress:latest
+    restart: always
+    environment:
+      WORDPRESS_DB_NAME: dbs10724437
+      WORDPRESS_DB_USER: dbu5622163
+      WORDPRESS_DB_PASSWORD: root
+      SERVER_NAME: localhost
+    volumes:
+      - ./bytehube:/var/www/html
+      # - ./bytehube/php.ini:/usr/local/etc/php/conf.d/custom.ini
+      # - ./copiabytehube:/var/www/html
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+        - "4283:80"
+    environment:
+        PMA_HOST: my_mysql
+        MYSQL_ROOT_PASSWORD: root
+    depends_on:
+        - my_mysql
+  # mariadb:
+  #     image: mariadb:10.6
+  #     # volumes:
+  #     #   - ./db:/var/lib/mysql
+  #     restart: always
+  #     environment:
+  #       MARIADB_DATABASE: dbs10724437
+  #       MARIADB_USER: dbu5622163
+  #       MARIADB_PASSWORD: Roysreyes902023
+  #       MARIADB_ROOT_PASSWORD: Roysreyes902023
+
+# networks:
+#   default:
+#     external:
+#       name: nginx-proxy
