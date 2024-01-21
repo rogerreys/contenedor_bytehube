@@ -1,4 +1,6 @@
 version: '23.0.5'
+networks:
+  bytehube_network:
 
 services:
   my_mysql:
@@ -17,6 +19,9 @@ services:
       - 33066:3306
     expose: 
       - 33066
+    networks:
+      - bytehube_network
+
   wordpress:
     depends_on:
       - my_mysql
@@ -35,6 +40,9 @@ services:
       - ./bytehube:/var/www/html
       # - ./bytehube/php.ini:/usr/local/etc/php/conf.d/custom.ini
       # - ./copiabytehube:/var/www/html
+    networks:
+      - bytehube_network
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -44,3 +52,5 @@ services:
         MYSQL_ROOT_PASSWORD: root
     depends_on:
         - my_mysql
+    networks:
+      - bytehube_network
